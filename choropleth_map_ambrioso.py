@@ -14,25 +14,30 @@ print(counties["features"][0])
 df = pd.read_csv("https://raw.githubusercontent.com/kjhealy/fips-codes/master/state_and_county_fips_master.csv")
 
 
-df_FL = df[df['state'] == 'FL']
-print(df_FL.reset_index(drop=True))
-
-county_list = ['Hillsborough County', 'Manatee County', 'Brevard County', 'Sarasota County', 'Alachua County']
-
-for county in county_list:
-  print(df_FL[df_FL['name'] == county])
-
-fips_list = [12057, 12081, 12009, 12115]
-county_dict = dict(zip(county_list, fips_list))
-print(county_dict)
+df_FL = df.loc[df['state'] == 'FL']
+df_FL.reset_index(drop=True)
+df_FL['count'] = [0 for i in range(67)]
+print(df_FL)
 
 
-# Generate result using pandas 
+for i, item in enumerate(df_FL['fips']):
+    print(f'{i}. {item}')
+    
+for i, item in enumerate(df_FL['name']):
+    print(f'{i}. {item}')    
+  
+
+
+# We create a dataframe with Ambrioso members assigned to counties in Florida
+# I spend a lot of time trying to figure out a way to do this.
+# Then I realized the right way to do this is to create a csv file
+# with the numbers in it!
+
 result = [] 
 for value in df_FL['fips']: 
     if value == 12057:
-        result.append(8)
-    elif value ==12001:
+        result.append(10)
+    elif value == 12001:
       result.append(1) 
     elif value == 12081:
       result.append(2)
@@ -43,13 +48,13 @@ for value in df_FL['fips']:
     else:
       result.append(0)
 
-df_FL["ambriosos"] = result    
-print(df_FL) 
+df_FL["Ambriosos"] = result    
+
 
 
 st = {"FL":(27.6648,-81.5158)}
 
-fig = px.choropleth_mapbox(df_FL, geojson=counties, locations='fips', color='ambriosos',
+fig = px.choropleth_mapbox(df_FL, geojson=counties, locations='fips', color='Ambriosos',
                            color_continuous_scale="Viridis",
                            range_color=(0, 8),
                            mapbox_style="carto-positron",
