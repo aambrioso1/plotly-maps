@@ -65,7 +65,7 @@ fig = px.choropleth_mapbox(df_FL, geojson=counties, locations='fips', color='Amb
                           )
 fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
 
-# Can use the renderer variable to get other out for example "png".
+# Can use the renderer variable to get other output for example "png".
 # See https://plotly.com/python/renderers/ for more information.
     
 fig.show(renderer="browser")  
